@@ -29,13 +29,6 @@ def make_driver_firefox():
 
 firefox_browser = make_driver_firefox()
 
-#função que grava as informações em arquivos txt
-def write_infos(get,name_file):
-    get = ','.join(get)
-    with open(f'src/{name_file}.txt','a') as arq:
-        arq.write(get)
-        arq.write('\n')
-
 # função que pega os links das partidas
 def get_links_matches(firefox_browser):
     firefox_browser.get('https://fbref.com/pt/equipes/639950ae/2023/partidas/c24/schedule/Flamengo-Resultados-e-Calendarios-Serie-A')
@@ -51,6 +44,8 @@ def get_links_matches(firefox_browser):
     firefox_browser.quit()
 #get_links_matches(firefox_browser)
 
+
+#função que le o arquivo com os links das partidas
 def read_arqs():
     list_links = list()
     with open('src/links_partidas.txt','r') as arq_links_matches:
@@ -59,6 +54,14 @@ def read_arqs():
 
 list_links = read_arqs()
 
+#função que grava as informações em arquivos txt
+def write_infos(get,name_file):
+    get = ','.join(get)
+    with open(f'src/{name_file}.txt','a') as arq:
+        arq.write(get)
+        arq.write('\n')
+
+#função que pega as informações das partidas e grava em arquivos txt utilizando a função write_infos() 
 def get_info_matches(firefox_browser,list_links):
    for link in list_links[0]:
         try:
