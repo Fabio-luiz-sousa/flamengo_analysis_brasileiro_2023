@@ -49,18 +49,31 @@ def get_links_matches(firefox_browser):
         except:
             ...
     firefox_browser.quit()
-get_links_matches(firefox_browser)
+#get_links_matches(firefox_browser)
 
+def read_arqs():
+    list_links = list()
+    with open('src/links_partidas.txt','r') as arq_links_matches:
+        list_links.append(arq_links_matches.readlines())
+    return list_links
 
-def get_info_matches(firefox_browser):
-    get_escalacao = firefox_browser.find_elements(by = By.ID,value = 'a')
-    write_infos(get_escalacao[1].text.split('\n'),'escalacao')
+list_links = read_arqs()
 
-    get_stats_match = firefox_browser.find_element(by = By.ID,value = 'team_stats')
-    write_infos(get_stats_match.text.split('\n'),'estatisticas_partidas')
+def get_info_matches(firefox_browser,list_links):
+   for link in list_links[0]:
+        try:
+            firefox_browser.get(link)
+            get_escalacao = firefox_browser.find_elements(by = By.ID,value = 'a')
+            write_infos(get_escalacao[1].text.split('\n'),'escalacao')
 
-    get_stats_extra_match = firefox_browser.find_element(by = By.ID,value = 'team_stats_extra')
-    write_infos(get_stats_extra_match.text.split('\n'),'estatisticas_extras_partidas')
+            get_stats_match = firefox_browser.find_element(by = By.ID,value = 'team_stats')
+            write_infos(get_stats_match.text.split('\n'),'estatisticas_partidas')
 
+            get_stats_extra_match = firefox_browser.find_element(by = By.ID,value = 'team_stats_extra')
+            write_infos(get_stats_extra_match.text.split('\n'),'estatisticas_extras_partidas')
+        except:
+            ...
+        firefox_browser.quit()
 
+get_info_matches(firefox_browser,list_links)
     
