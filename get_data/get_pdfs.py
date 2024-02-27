@@ -80,10 +80,3 @@ def get_pdfs(firefox_browser):
             search2.click()
     firefox_browser.quit() 
 get_pdfs(firefox_browser)
-
-
-
-#arrumar o renomeamento de asrquivo
-#mudar as configurações de pasta de arquivos no vscode
-
-

@@ -6,7 +6,7 @@ import pandas as pd
 def get_info_page_pdf(number_page):
     list_arrays=list()
     # doc armazena o pdf
-    doc = fitz.open('src/rodada_31.pdf')
+    doc = fitz.open('src/rodada_1.pdf')
     for i in range(0,number_page):
         # pega a primeira pagina
         page1 = doc.load_page(i)
@@ -16,21 +16,21 @@ def get_info_page_pdf(number_page):
         # lista com as informações das tabelas
         list_tables = table.tables[0].extract()
         # arrray para armazenar as info das tabelas
-        array_tables = np.zeros((len(list_tables),1),dtype=object)
+        list_tables_info = list()
         # loop para armazenas as infos no array
         for i in np.arange(0,len(list_tables)):
-            array_tables[i][0] = list_tables[i]
-
-        for i in np.arange(0,len(array_tables)):
+            list_tables_info.append(list_tables[i])
+        #print(list_tables_info)
+        for i in np.arange(0,len(list_tables_info[0])):
             # list comprehension para tirar os valores nulos das listas
-            array_tables[i][0] = [data for data in array_tables[i][0] if data is not None]
-        list_arrays.append(array_tables)
+            list_tables_info[0][i] = [data for data in list_tables_info[0][i] if data is not None]
+        list_arrays.append(list_tables_info[0][i])
     return list_arrays
 
 list_arrays = get_info_page_pdf(3)
-#print(list_arrays[1])
+print(list_arrays)
 #print(list(list_arrays[1]))
-#função que cria um arquivo csv com as informações dos pdfs
+#função que cria um arquivo csv com as informações ddos pdfs
 def write_info_csv(list_arrays):
     df = pd.DataFrame()
     team_home_and_away = list_arrays[0][1][0][1].split('X')
@@ -62,7 +62,7 @@ def write_info_csv(list_arrays):
 
     df['tecnico_flamengo'] = [list_arrays[1][2][0][1]]
 
-    sum_gols = int(df['time_casa_resultado_final'].iloc[0])+int(df['time_visitante_resultado_final'].iloc[0])
+    sum_gols = int(df['time_casa_resultado_final'])+int(df['time_visitante_resultado_final'])
     list_time_goals = list()
     list_which_time = list()
     list_type_goals = list()
@@ -85,11 +85,10 @@ def write_info_csv(list_arrays):
     list_name_player_yellow_card = list()
     list_team_player_goal_yellow_card = list()
     list_motivo_yellow_card = list()
-    for i in range(10+sum_gols+5,len(list_arrays[1]),2):
-        if 'Cartões Vermelhos' in list_arrays[1][i][0]:
-            index_red_card = i
-        elif '' not in list_arrays[1][i][0]:
-            list_time_yellow_cards.append(list_arrays[1][i][0][0])
+    count=0
+    if 'Cartões Vermelhos' not in list_arrays[1][11+sum_gols+2][0]:
+        for i in range(10+sum_gols+5,19):
+            list_time_yellow_cards.append(list_arrays[1][i+count][0][0])
             list_which_time_yellow_cards.append(list_arrays[1][i][0][1])
             list_name_player_yellow_card.append(list_arrays[1][i][0][3])
             list_team_player_goal_yellow_card.append(list_arrays[1][i][0][4])
@@ -99,28 +98,12 @@ def write_info_csv(list_arrays):
             df['jogadores_cartao_amarelo'] = [list_name_player_yellow_card]
             df['time_jogadores_cartao_amarelo'] = [list_team_player_goal_yellow_card]
             df['motivo_cartao_amarelo'] = [list_motivo_yellow_card]
-                
-    list_time_red_cards = list()
-    list_which_time_red_cards = list()
-    list_name_player_red_card = list()
-    list_team_player_goal_red_card = list()
-    list_motivo_red_card = list()
-    for i in range(index_red_card,len(list_arrays[1]),2):
-        if '' not in list_arrays[1][i][0]:
-            list_time_red_cards.append(list_arrays[1][i][0][0])
-            list_which_time_red_cards.append(list_arrays[1][i][0][1])
-            list_name_player_red_card.append(list_arrays[1][i][0][3])
-            list_team_player_goal_red_card.append(list_arrays[1][i][0][4])
-            list_motivo_red_card.append(list_arrays[1][i+1][0][0])
-            df['tempo_cartao_vermelho'] = [list_time_red_cards]
-            df['1T/2T_cartao_vermelho'] = [list_which_time_red_cards]
-            df['jogadores_cartao_vermelho'] = [list_name_player_red_card]
-            df['time_jogadores_cartao_vermelho'] = [list_team_player_goal_red_card]
-            df['motivo_cartao_vermelho'] = [list_motivo_red_card]
+            
+            
     
  
-    print(df['tempo_cartao_vermelho'].values)
+    print(df[['tempo_cartao_amarelo','1T/2T_cartao_amarelo','jogadores_cartao_amarelo','time_jogadores_cartao_amarelo','motivo_cartao_amarelo']])
     
 #write_info_csv(list_arrays)
-print(list_arrays[0][20][0][1])
+
 #arrumar a parte dos cartoes amarelos, arrumar um jeito para nao dar erro
