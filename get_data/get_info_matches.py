@@ -6,6 +6,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
+import pandas as pd
 
 def make_driver_firefox():
     #caminho do driver do firefox
@@ -66,6 +67,9 @@ def get_info_matches(firefox_browser,list_links):
    for link in list_links[0]:
         try:
             firefox_browser.get(link)
+            get_info_basics_matches = firefox_browser.find_element(by=By.CLASS_NAME,value='scorebox')
+            write_infos(get_info_basics_matches.text.split('\n'),'info_basicas_partidas')
+
             get_escalacao = firefox_browser.find_elements(by = By.ID,value = 'a')
             write_infos(get_escalacao[1].text.split('\n'),'escalacao')
 
@@ -74,9 +78,10 @@ def get_info_matches(firefox_browser,list_links):
 
             get_stats_extra_match = firefox_browser.find_element(by = By.ID,value = 'team_stats_extra')
             write_infos(get_stats_extra_match.text.split('\n'),'estatisticas_extras_partidas')
+
+
         except:
             ...
-        firefox_browser.quit()
+        
 
 get_info_matches(firefox_browser,list_links)
-    
