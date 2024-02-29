@@ -49,13 +49,7 @@ def get_info_cards(list_arrays_infos_pdf,name_pdf):
     list_team_player_yellow_card = list()
     list_motivo_yellow_card = list()
     for i in range(index_yellow_cards,index_red_cards):
-        if 'NÃO HOUVE ADVERTÊNCIAS' in list_arrays_infos_pdf[1][i][0][1]:
-            df['tempo_cartao_amarelo'] = None
-            df['1T/2T_cartao_amarelo'] = None
-            df['jogadores_cartao_amarelo'] = None
-            df['time_jogadores_cartao_amarelo'] = None
-            df['motivo_cartao_amarelo'] = None
-        elif 'Cartões Amarelos' in list_arrays_infos_pdf[1][i][0][0]:
+        if 'Cartões Amarelos' in list_arrays_infos_pdf[1][i][0][0]:
             list_time_yellow_cards.append(list_arrays_infos_pdf[1][i][0][2][0])
             list_which_time_yellow_cards.append(list_arrays_infos_pdf[1][i][0][2][1])
             list_name_player_yellow_card.append(list_arrays_infos_pdf[1][i][0][2][3])
@@ -85,7 +79,6 @@ def get_info_cards(list_arrays_infos_pdf,name_pdf):
     list_red_card_direct_or_2_yellow_card = list()
     list_motivo_red_card = list()
     for i in range(index_red_cards,len(list_arrays_infos_pdf[1])):
-        try:
             if 'NÃO HOUVE EXPULSÕES' in list_arrays_infos_pdf[1][i][0][1]:
                 df['tempo_cartao_vermelho'] = None
                 df['1T/2T_cartao_vermelho'] = None
@@ -121,8 +114,8 @@ def get_info_cards(list_arrays_infos_pdf,name_pdf):
                 df['time_jogadores_cartao_vermelho'] = [list_team_player_red_card]
                 df['cartao_vermelho_direto_ou_2_cartao_amarelo'] = [list_red_card_direct_or_2_yellow_card]
                 df['motivo_cartao_vermelho'] = [list_motivo_red_card]
-        except:
-            print(f'Erro cartao vermelho: {name_pdf}.pdf')
+    
+            
         
 
 def get_info_subs(list_arrays_infos_pdf,name_pdf):
@@ -147,13 +140,18 @@ def get_info_subs(list_arrays_infos_pdf,name_pdf):
             df['jogadores_substituidos'] = [list_name_players_subs_in_and_out]
 
     except:
-        print(f'Erro subs: {name_pdf}.pdf')
+        print(f'Erro: {name_pdf}.pdf')
 def create_cvs_files(df,name_pdf):
     df.to_csv(f'src/{name_pdf}.csv',index=False)
 
-for name_pdf in list_name_pdfs:
+""" for name_pdf in list_name_pdfs:
     print(name_pdf)
     list_arrays_infos_pdf = get_info_pdf(name_pdf)
     get_info_cards(list_arrays_infos_pdf,name_pdf)
     get_info_subs(list_arrays_infos_pdf,name_pdf)
-    create_cvs_files(df,name_pdf)
+    create_cvs_files(df,name_pdf) """
+name_pdf='rodada_1'
+list_arrays_infos_pdf = get_info_pdf(name_pdf)
+get_info_cards(list_arrays_infos_pdf,name_pdf)
+get_info_subs(list_arrays_infos_pdf,name_pdf)
+create_cvs_files(df,name_pdf)
