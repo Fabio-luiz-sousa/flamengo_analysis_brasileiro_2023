@@ -1,2 +1,8 @@
 explicar o porque eu usei cada coisa, as funções. explicar bem
-explicar que vou precisar colocar na mao os catões vermelhos da rodad 6
+explicar que vou precisar colocar na mao os catões vermelhos e as substituições da rodada 6 e da rodada 15
+
+create_data_info_basicas:
+- Modifiquei os arquivos das partidas 30,17 e 11 devido a que:
+a partida 30 tinha uma virgula a mais na parte do capitao, entao eu tirei
+a partidada doi contra o cuiaba e por isso tinha dois horarios um de cuiaba e um de brasilia deixei so o de brasilia
+e a partidada contra o santos nao teve publico pois foi de portoes fechados

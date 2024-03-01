@@ -70,8 +70,10 @@ def get_info_matches(firefox_browser,list_links):
             get_info_basics_matches = firefox_browser.find_element(by=By.CLASS_NAME,value='scorebox')
             write_infos(get_info_basics_matches.text.split('\n'),'info_basicas_partidas')
 
-            get_escalacao = firefox_browser.find_elements(by = By.ID,value = 'a')
-            write_infos(get_escalacao[1].text.split('\n'),'escalacao')
+            get_escalacao_home_team = firefox_browser.find_elements(by = By.ID,value = 'a')
+            get_escalacao_away_team = firefox_browser.find_elements(by = By.ID,value = 'b')
+            write_infos(get_escalacao_home_team[1].text.split('\n'),'escalacao_time_casa')
+            write_infos(get_escalacao_away_team[1].text.split('\n'),'escalacao_time_visitante')
 
             get_stats_match = firefox_browser.find_element(by = By.ID,value = 'team_stats')
             write_infos(get_stats_match.text.split('\n'),'estatisticas_partidas')
