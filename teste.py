@@ -1,4 +1,4 @@
-l  =[1,2,3]
-a = [4,5,6]
+import pandas as pd
 
-s = l.index(max(l))
+df = pd.read_csv('src/rodada_9.csv')
+print(df)

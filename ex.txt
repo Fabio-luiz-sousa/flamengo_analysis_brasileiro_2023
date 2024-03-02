@@ -6,3 +6,6 @@ create_data_info_basicas:
 a partida 30 tinha uma virgula a mais na parte do capitao, entao eu tirei
 a partidada doi contra o cuiaba e por isso tinha dois horarios um de cuiaba e um de brasilia deixei so o de brasilia
 e a partidada contra o santos nao teve publico pois foi de portoes fechados
+
+#Fazer:
+-arrumar o create_data usando o pd.concat
