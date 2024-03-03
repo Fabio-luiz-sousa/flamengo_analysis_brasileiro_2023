@@ -40,7 +40,7 @@ def make_driver_firefox():
 
 firefox_browser = make_driver_firefox()
 
-#função que pega as infod de publico e renda
+#função que pega as informações de publico e renda
 def get_info_prublico_renda(search_publico_renda):
     search_publico_renda_list = search_publico_renda.text.split('\n')
     for word in search_publico_renda_list:
