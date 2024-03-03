@@ -43,7 +43,7 @@ def get_links_matches(firefox_browser):
         except:
             ...
     firefox_browser.quit()
-#get_links_matches(firefox_browser)
+get_links_matches(firefox_browser)
 
 
 #função que le o arquivo com os links das partidas

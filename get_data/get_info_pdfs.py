@@ -1,11 +1,11 @@
 import numpy as np
 import pandas as pd
-import pdfplumber #tive usar pois estava dando problema para ler os cartoes vermelhos usanso so o pymupdf(fitz)
+import pdfplumber 
 from pathlib import Path
 
 df=pd.DataFrame()
-#função que le os pdfs
 
+#função que le os nomes dos pdfs
 def read_name_pdfs():
     #diretório que contem os arquivos pdf
     directory = Path('src')
@@ -17,6 +17,7 @@ def read_name_pdfs():
     return list_name_pdfs
 list_name_pdfs = read_name_pdfs()
 
+#função que le as informações dos pdfs
 def get_info_pdf(name_pdf):
     #abri os pdfs
     try:
@@ -36,7 +37,7 @@ def get_info_pdf(name_pdf):
         ...
     return list_arrays_infos_pdf
 
-
+#função que pega as informações sobre os cartões
 def get_info_cards(list_arrays_infos_pdf,name_pdf):
     for i in range(0,len(list_arrays_infos_pdf[1])):
         if 'Cartões Amarelos' in list_arrays_infos_pdf[1][i][0][0]:
@@ -124,7 +125,7 @@ def get_info_cards(list_arrays_infos_pdf,name_pdf):
         except:
             print(f'Erro cartao vermelho: {name_pdf}.pdf')
         
-
+#função que pega as informações sobre as substituições
 def get_info_subs(list_arrays_infos_pdf,name_pdf):
     for i in range(0,len(list_arrays_infos_pdf[2])):
         if 'Substituições' in list_arrays_infos_pdf[2][i][0][0]:
@@ -148,6 +149,8 @@ def get_info_subs(list_arrays_infos_pdf,name_pdf):
 
     except:
         print(f'Erro subs: {name_pdf}.pdf')
+
+#função que cria um arquivo csv para cada rodada contendo as informações dos cartões e substituições
 def create_cvs_files(df,name_pdf):
     df.to_csv(f'src/{name_pdf}.csv',index=False)
 
