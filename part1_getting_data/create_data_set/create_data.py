@@ -168,6 +168,6 @@ df_info_stats_matches = insert_info_stats_matches()
 
 def concat_all_dfs(df_info_basics,df_public_matches,df_renda_matches,df_escalacao,df_cards_and_subs,df_info_stats_matches):
     df_flamengo = pd.concat([df_info_basics,df_public_matches,df_renda_matches,df_info_stats_matches,df_cards_and_subs,df_escalacao],axis=1)
-    df_flamengo.to_csv('src_final/estatiticas_flamengo_brasileiro_2023.csv',index=False)
+    df_flamengo.to_csv('src_final/estatisticas_flamengo_brasileiro_2023.csv',index=False)
     print(df_flamengo)
 concat_all_dfs(df_info_basics,df_public_matches,df_renda_matches,df_escalacao,df_cards_and_subs,df_info_stats_matches)
